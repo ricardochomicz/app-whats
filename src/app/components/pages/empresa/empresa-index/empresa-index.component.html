@@ -1,0 +1,120 @@
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">Empresas</h5>
+            <a routerLink="/empresas/novo" class="btn btn-primary">Nova Empresa</a>
+        </div>
+        <div class="card-body">
+            <!-- Filtros -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Buscar por Nome/CNPJ</label>
+                        <input type="text" class="form-control" [(ngModel)]="filtros.busca"
+                            (ngModelChange)="onFiltroChange()">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Título da Mensagem</label>
+                        <input type="text" class="form-control" [(ngModel)]="filtros.mensagem"
+                            (ngModelChange)="onFiltroChange()">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Data Início</label>
+                        <input type="date" class="form-control" [(ngModel)]="filtros.dataInicio"
+                            (ngModelChange)="onFiltroChange()">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Data Fim</label>
+                        <input type="date" class="form-control" [(ngModel)]="filtros.dataFim"
+                            (ngModelChange)="onFiltroChange()">
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>CNPJ</th>
+                            <th>Nome</th>
+                            <th>Operadora</th>
+                            <th>Contato</th>
+                            <th>Último Envio</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let empresa of empresas">
+                            <td>{{empresa.cnpj}}</td>
+                            <td>{{empresa.nome}}</td>
+                            <td>{{empresa.operadora}}</td>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <span>{{empresa.contato_nome}}</span>
+                                    <small class="text-muted">{{empresa.primeiro_telefone}}</small>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-column" *ngIf="empresa.ultimo_envio">
+                                    <small class="text-muted">{{formatarData(empresa.ultimo_envio)}}</small>
+                                    <small class="badge bg-info">{{empresa.ultima_mensagem}}</small>
+                                </div>
+                                <span *ngIf="!empresa.ultimo_envio" class="text-muted">Nenhum envio</span>
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a [routerLink]="['/empresas', empresa.id, 'mensagens']"
+                                        class="btn btn-success btn-sm">
+                                        <i class="fa fa-whatsapp"></i>
+                                    </a>
+                                    <a [routerLink]="['/empresas', empresa.id, 'edit']" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <button (click)="excluirEmpresa(empresa.id)" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginação -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                    <span class="text-muted">
+                        Mostrando {{(currentPage-1) * itemsPerPage + 1}} até
+                        {{Math.min(currentPage * itemsPerPage, totalItems)}}
+                        de {{totalItems}} registros
+                    </span>
+                </div>
+                <nav aria-label="Navegação de página">
+                    <ul class="pagination mb-0">
+                        <li class="page-item" [class.disabled]="currentPage === 1">
+                            <a class="page-link" href="javascript:void(0)" (click)="onPageChange(currentPage - 1)">
+                                Anterior
+                            </a>
+                        </li>
+                        <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+                            <a class="page-link" href="javascript:void(0)" (click)="onPageChange(page)">
+                                {{page}}
+                            </a>
+                        </li>
+                        <li class="page-item" [class.disabled]="currentPage === totalPages">
+                            <a class="page-link" href="javascript:void(0)" (click)="onPageChange(currentPage + 1)">
+                                Próximo
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

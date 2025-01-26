@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form [formGroup]="form" (ngSubmit)="enviarComentario()">
+                <div class="form-group">
+                    <textarea class="form-control" formControlName="comentario" rows="2"
+                        placeholder="Digite seu comentário..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2" [disabled]="!form.valid">
+                    Enviar Comentário
+                </button>
+            </form>
+        </div>
+        <div class="col-6">
+            <div class="comentario" *ngFor="let comentario of comentarios">
+                <div class="comentario-texto">
+                    {{ comentario.comentario }}
+                </div>
+                <div class="comentario-data text-muted small">
+                    {{ comentario.data_envio | date:'dd/MM/yyyy HH:mm' }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

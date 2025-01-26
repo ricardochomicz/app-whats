@@ -1,0 +1,108 @@
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-header">
+            <h5 class="card-title mt-2">Envio de Mensagens</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-8">
+                    <h6>Dados da Empresa</h6>
+                    <p><strong>Nome:</strong> {{empresa?.nome}}<br><small>{{empresa?.cnpj}}</small></p>
+                </div>
+                <div class="col-md-4">
+                    <p><strong>Operadora:</strong> {{empresa?.operadora}}</p>
+                    <p><strong>Contato:</strong> {{empresa?.contato}}</p>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h6>Telefones</h6>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Status</th>
+                                    <th>Última Mensagem</th>
+                                    <th>Mensagem</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let telefone of empresa?.telefones">
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center">
+                                            <span *ngIf="!editandoTelefone[telefone]">{{telefone}}</span>
+                                            <input *ngIf="editandoTelefone[telefone]" type="text" class="form-control"
+                                                [(ngModel)]="telefoneEditado[telefone]">
+                                            <div class="ms-2">
+                                                <button *ngIf="!editandoTelefone[telefone]"
+                                                    class="btn btn-sm btn-outline-primary"
+                                                    (click)="iniciarEdicaoTelefone(telefone)">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <div class="d-flex gap-1" *ngIf="editandoTelefone[telefone]">
+                                                    <button class="btn btn-sm btn-success"
+                                                        (click)="salvarTelefone(telefone)">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger"
+                                                        (click)="cancelarEdicaoTelefone(telefone)">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <select class="form-select" [(ngModel)]="statusTelefone[telefone]"
+                                            (change)="atualizarStatus(telefone)">
+                                            <option value="pendente">Pendente</option>
+                                            <option value="enviado">Enviado</option>
+                                            <option value="recebido">Recebido</option>
+                                            <option value="lido">Lido</option>
+                                        </select>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="d-flex flex-column">
+                                            <small class="text-muted">{{getUltimoEnvio(telefone)}}</small>
+                                            <small *ngIf="empresa?.ultimosEnvios?.[telefone]?.status"
+                                                [class]="'badge bg-' + getStatusClass(empresa.ultimosEnvios[telefone].status)">
+                                                {{empresa.ultimosEnvios[telefone].mensagem}} -
+                                                {{empresa.ultimosEnvios[telefone].status}}
+                                            </small>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <select class="form-select" [(ngModel)]="mensagensSelecionadas[telefone]"
+                                            (change)="onMensagemSelecionada($event, telefone)">
+                                            <option value="">Selecione uma mensagem</option>
+                                            <option *ngFor="let msg of mensagens" [value]="msg.id">
+                                                {{msg.titulo}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td class="align-middle">
+                                        <button class="btn btn-success btn-sm"
+                                            [disabled]="!mensagensSelecionadas[telefone]"
+                                            (click)="enviarMensagem(telefone)">
+                                            <i class="fa fa-whatsapp"></i> Enviar
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                <a routerLink="/empresas" class="btn btn-secondary">Voltar</a>
+            </div>
+        </div>
+        <hr>
+        <app-comentarios [empresaId]="empresaId"></app-comentarios>
+    </div>
+</div>

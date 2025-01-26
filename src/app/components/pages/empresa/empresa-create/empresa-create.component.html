@@ -1,0 +1,81 @@
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-header">
+            <h5 class="card-title mt-2">Nova Empresa</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-4">
+                        <label for="cnpj" class="form-label">CNPJ</label>
+                        <input type="text" class="form-control" id="cnpj" name="cnpj" formControlName="cnpj"
+                            (keyup)="getEmpresa($event)">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-8">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" formControlName="nome">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-4">
+                        <label for="operadora" class="form-label">Operadora</label>
+                        <select class="form-select" id="operadora" name="operadora" formControlName="operadora">
+                            <option value="0">Selecione a operadora</option>
+                            <option value="1">Claro</option>
+                            <option value="2">Tim</option>
+                            <option value="3">Vivo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-2">
+                        <label for="cep" class="form-label">CEP</label>
+                        <input type="text" class="form-control" id="cep" name="cep" formControlName="cep">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-6">
+                        <label for="endereco" class="form-label">Endereço</label>
+                        <input type="text" class="form-control" id="endereco" name="endereco"
+                            formControlName="endereco">
+                    </div>
+                    <div class="form-group col-sm-12 col-md-4">
+                        <label for="cidade" class="form-label">Cidade</label>
+                        <input type="text" class="form-control" id="cidade" name="cidade" formControlName="cidade">
+                    </div>
+                </div>
+                <hr>
+                <h5>Contato</h5>
+                <div class="row">
+                    <div class="form-group col-sm-12 col-md-12">
+                        <label for="contato" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="contato" formControlName="contato">
+                    </div>
+                </div>
+
+                <div formArrayName="telefones">
+                    <div *ngFor="let telefone of telefones.controls; let i=index" class="row mt-2">
+                        <div class="form-group col-sm-12 col-md-4">
+                            <label class="form-label">Telefone {{i + 1}}</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" [formControlName]="i">
+                                <button type="button" class="btn btn-danger" (click)="removerTelefone(i)"
+                                    *ngIf="telefones.length > 1">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-secondary mt-2" (click)="adicionarTelefone()">
+                    Adicionar Telefone
+                </button>
+
+                <div class="d-flex justify-content-end mt-3">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="javascript:void(0)" routerLink="/empresas" class="btn btn-secondary ms-2">Voltar</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

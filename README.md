@@ -1,27 +1,89 @@
-# AppWhats
+##Projeto AppWhats
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+###Clone o repositório
+```bash
+git clone https://github.com/ricardochomicz/app-whats.git
+cd app-whats
+```
 
-## Development server
+###Instale as dependências do frontend
+```bash
+npm install
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+###Instale as dependências do backend
+```bash
+cd backend
+npm install
+```
+##Executando o projeto
 
-## Code scaffolding
+###Inicie o servidor do backend
+```bash
+cd backend
+node server.js
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+###Inicie o servidor do frontend
+```bash
+ng serve
+```
 
-## Build
+###Acesse a aplicação no navegador
+```bash
+http://localhost:4200
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Estrutura do Banco de Dados 
 
-## Running unit tests
+### Tabelas
+- empresas: Dados das empresas
+- contatos: Contatos vinculados às empresas
+- telefones: Números de telefone com status
+- mensagens: Templates de mensagens
+- envios: Histórico de envios
+- comentarios: Comentários por empresa
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Endpoints da API
 
-## Running end-to-end tests
+### Empresas
+- GET /api/empresas - Lista empresas
+- POST /api/empresas - Cria empresa
+- GET /api/empresas/:id - Busca empresa
+- PUT /api/empresas/:id - Atualiza empresa
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Mensagens
+- GET /api/mensagens - Lista mensagens
+- POST /api/mensagens - Cria mensagem
+- POST /api/mensagens/enviar - Registra envio
 
-## Further help
+### Comentários
+- GET /api/comentarios/empresa/:id - Lista comentários
+- POST /api/comentarios - Cria comentário
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Desenvolvimento
+
+### Estrutura do Projeto
+app-whats/
+├── backend/
+│ ├── database/
+│ ├── routes/
+│ ├── services/
+│ └── server.js
+└── src/
+├── app/
+│ ├── components/
+│ ├── pages/
+│ └── services/
+└── environments/
+
+## Autor
+Ricardo Chomicz
+
+## Licença
+Este projeto está sob a licença MIT.
+
+
+
+
+

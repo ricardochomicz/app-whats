@@ -1,0 +1,25 @@
+<form [formGroup]="formCreate" (submit)="submit()">
+    <modal-lg (onHide)="hideModal($event)">
+        <h5 modal-title>
+            Cadastrar Mensagem
+        </h5>
+        <div modal-body>
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-12">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input type="text" class="form-control" formControlName="titulo">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-sm-12 col-md-12">
+                    <label for="conteudo" class="form-label">Conteúdo Mensagem</label>
+                    <textarea class="form-control" formControlName="conteudo"></textarea>
+                </div>
+            </div>
+        </div>
+        <div modal-footer>
+            <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+            <button type="button" class="btn btn-secondary mt-3 ms-2" (click)="hideModal($event)">Fechar</button>
+        </div>
+    </modal-lg>
+</form>
