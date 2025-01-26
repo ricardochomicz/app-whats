@@ -1,35 +1,35 @@
-##Projeto AppWhats
+## Projeto AppWhats
 
-###Clone o repositório
+### Clone o repositório
 ```bash
 git clone https://github.com/ricardochomicz/app-whats.git
 cd app-whats
 ```
 
-###Instale as dependências do frontend
+### Instale as dependências do frontend
 ```bash
 npm install
 ```
 
-###Instale as dependências do backend
+### Instale as dependências do backend
 ```bash
 cd backend
 npm install
 ```
 ##Executando o projeto
 
-###Inicie o servidor do backend
+### Inicie o servidor do backend
 ```bash
 cd backend
 node server.js
 ```
 
-###Inicie o servidor do frontend
+### Inicie o servidor do frontend
 ```bash
 ng serve
 ```
 
-###Acesse a aplicação no navegador
+### Acesse a aplicação no navegador
 ```bash
 http://localhost:4200
 ```
