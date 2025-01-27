@@ -41,7 +41,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>CNPJ</th>
                             <th>Nome</th>
                             <th>Operadora</th>
                             <th>Contato</th>
@@ -51,23 +50,24 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let empresa of empresas">
-                            <td>{{empresa.cnpj}}</td>
-                            <td>{{empresa.nome}}</td>
-                            <td>{{empresa.operadora}}</td>
-                            <td>
+                            <td class="align-middle">{{empresa.nome}}<br><small
+                                    class="text-muted">{{empresa.cnpj}}</small></td>
+                            <td class="align-middle">{{empresa.nome}}</td>
+                            <td class="align-middle">{{empresa.operadora}}</td>
+                            <td class="align-middle">
                                 <div class="d-flex flex-column">
                                     <span>{{empresa.contato_nome}}</span>
                                     <small class="text-muted">{{empresa.primeiro_telefone}}</small>
                                 </div>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 <div class="d-flex flex-column" *ngIf="empresa.ultimo_envio">
                                     <small class="text-muted">{{formatarData(empresa.ultimo_envio)}}</small>
                                     <small class="badge bg-info">{{empresa.ultima_mensagem}}</small>
                                 </div>
                                 <span *ngIf="!empresa.ultimo_envio" class="text-muted">Nenhum envio</span>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 <div class="btn-group">
                                     <a [routerLink]="['/empresas', empresa.id, 'mensagens']"
                                         class="btn btn-success btn-sm">

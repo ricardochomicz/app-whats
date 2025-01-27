@@ -10,7 +10,7 @@ class EmpresaService {
         return new Promise((resolve, reject) => {
             const offset = (page - 1) * limit;
             const params = [];
-            let whereClause = '';
+            let whereClause = 'WHERE NOT EXISTS (SELECT 1 FROM telefones t WHERE (t.contato_id = c.id OR t.empresa_id = e.id) AND t.status_envio = "oportunidade")';
 
             // Constrói a cláusula WHERE baseada nos filtros
             const conditions = [];
@@ -32,7 +32,7 @@ class EmpresaService {
             }
 
             if (conditions.length > 0) {
-                whereClause = 'WHERE ' + conditions.join(' AND ');
+                whereClause += ' AND ' + conditions.join(' AND ');
             }
 
             // Query para contar total de registros
@@ -40,7 +40,7 @@ class EmpresaService {
                 SELECT COUNT(DISTINCT e.id) as total 
                 FROM empresas e
                 LEFT JOIN contatos c ON c.empresa_id = e.id
-                LEFT JOIN telefones t ON t.contato_id = c.id
+                LEFT JOIN telefones t ON t.contato_id = c.id OR t.empresa_id = e.id
                 LEFT JOIN envios env ON env.telefone_numero = t.numero
                 LEFT JOIN mensagens m ON m.id = env.mensagem_id
                 ${whereClause}
@@ -65,7 +65,7 @@ class EmpresaService {
                         m.titulo as ultima_mensagem
                     FROM empresas e
                     LEFT JOIN contatos c ON c.empresa_id = e.id
-                    LEFT JOIN telefones t ON t.contato_id = c.id
+                    LEFT JOIN telefones t ON t.contato_id = c.id OR t.empresa_id = e.id
                     LEFT JOIN (
                         SELECT 
                             telefone_numero,
